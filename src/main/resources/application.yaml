@@ -1,3 +1,9 @@
 spring:
   application:
     name: spring-modulith-library-management
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: false
