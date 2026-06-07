@@ -1,0 +1,40 @@
+services:
+
+    postgres:
+        image: postgres:15
+        container_name: library_postgres
+        environment:
+            POSTGRES_DB: library_db
+            POSTGRES_USER: library_user
+            POSTGRES_PASSWORD: library_pass
+        ports:
+            - "5433:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    prometheus:
+        image: prom/prometheus:v3.12.0
+        container_name: library_prometheus
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+        depends_on:
+            - postgres
+
+    grafana:
+        image: grafana/grafana:12.2.9
+        container_name: library_grafana
+        ports:
+            - "3000:3000"
+        environment:
+            GF_SECURITY_ADMIN_USER: admin
+            GF_SECURITY_ADMIN_PASSWORD: admin
+        volumes:
+            - grafana_data:/var/lib/grafana
+        depends_on:
+            - prometheus
+
+volumes:
+    postgres_data:
+    grafana_data:
