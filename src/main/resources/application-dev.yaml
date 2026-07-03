@@ -1,9 +1,17 @@
+server:
+    servlet:
+        context-path: /api/v1
+
 spring:
     datasource:
         url: jdbc:postgresql://localhost:5433/library_db
         username: library_user
         password: library_pass
         driver-class-name: org.postgresql.Driver
+        hikari:
+            maximum-pool-size: 10
+            minimum-idle: 2
+    #            TODO test loads later
 
     jpa:
         hibernate:
@@ -12,6 +20,7 @@ spring:
         properties:
             hibernate:
                 format_sql: false
+        open-in-view: false
 
     flyway:
         enabled: true
@@ -38,5 +47,5 @@ management:
 
 logging:
     level:
-        root: INFO
-        com.vasav: DEBUG
+        org.hibernate.SQL: DEBUG
+        org.hibernate.orm.jdbc.bind: TRACE
