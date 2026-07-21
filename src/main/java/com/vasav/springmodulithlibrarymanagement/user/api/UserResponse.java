@@ -1,5 +1,6 @@
 package com.vasav.springmodulithlibrarymanagement.user.api;
 
+import com.vasav.springmodulithlibrarymanagement.address.api.AddressResponse;
 import com.vasav.springmodulithlibrarymanagement.user.internal.entity.UserRole;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ public record UserResponse(
         String firstName,
         String lastName,
         String phone,
-        Long addressId,
+        AddressResponse address,
         Long preferredBranchId,
         UserRole userRole,
         boolean active,

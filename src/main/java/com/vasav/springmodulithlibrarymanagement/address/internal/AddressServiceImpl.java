@@ -1,15 +1,15 @@
 package com.vasav.springmodulithlibrarymanagement.address.internal;
 
+import com.vasav.springmodulithlibrarymanagement.address.api.AddressNotFoundException;
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressRequest;
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressResponse;
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-class AddressServiceImpl implements AddressService {
+public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository repository;
 
@@ -25,7 +25,7 @@ class AddressServiceImpl implements AddressService {
     @Override
     public AddressResponse getById(Long id) {
         Address address = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Address not found: " + id));
+                .orElseThrow(() -> new AddressNotFoundException(id));
 
         return toResponse(address);
     }
@@ -33,7 +33,7 @@ class AddressServiceImpl implements AddressService {
     @Override
     public AddressResponse update(Long id, AddressRequest request) {
         Address address = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Address not found: " + id));
+                .orElseThrow(() -> new AddressNotFoundException(id));
 
         mapRequest(request, address);
 
@@ -44,7 +44,7 @@ class AddressServiceImpl implements AddressService {
     @Override
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Address not found: " + id);
+            throw new AddressNotFoundException(id);
         }
         repository.deleteById(id);
     }
