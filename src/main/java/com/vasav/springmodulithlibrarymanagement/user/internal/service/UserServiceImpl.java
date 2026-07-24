@@ -2,14 +2,10 @@ package com.vasav.springmodulithlibrarymanagement.user.internal.service;
 
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressResponse;
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressService;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserRequest;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserResponse;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserService;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserSummary;
+import com.vasav.springmodulithlibrarymanagement.user.api.*;
+import com.vasav.springmodulithlibrarymanagement.user.api.exception.DuplicateUserException;
+import com.vasav.springmodulithlibrarymanagement.user.api.exception.UserNotFoundException;
 import com.vasav.springmodulithlibrarymanagement.user.internal.entity.User;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserRole;
-import com.vasav.springmodulithlibrarymanagement.user.internal.exception.DuplicateUserException;
-import com.vasav.springmodulithlibrarymanagement.user.internal.exception.UserNotFoundException;
 import com.vasav.springmodulithlibrarymanagement.user.internal.mapper.UserMapper;
 import com.vasav.springmodulithlibrarymanagement.user.internal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -138,5 +134,45 @@ public class UserServiceImpl implements UserService {
     private User findUserOrThrow(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @Override
+    @Transactional
+    public UserResponse registerMember(UserRegistrationRequest request) {
+        if (userRepository.existsByUsername(request.username())) {
+            throw new DuplicateUserException("Username already in use: " + request.username());
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new DuplicateUserException("Email already in use: " + request.email());
+        }
+
+        AddressResponse addressResponse = addressService.getById(request.addressId());
+        User user = userMapper.toEntityForRegistration(request);
+        User saved = userRepository.save(user);
+        return userMapper.toResponse(saved, addressResponse);
+    }
+
+    @Override
+    @Transactional
+    public UserResponse createLibrarian(UserRegistrationRequest request) {
+        if (userRepository.existsByUsername(request.username())) {
+            throw new DuplicateUserException("Username already in use: " + request.username());
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new DuplicateUserException("Email already in use: " + request.email());
+        }
+
+        AddressResponse addressResponse = addressService.getById(request.addressId());
+        User user = userMapper.toEntityForLibrarian(request);
+        User saved = userRepository.save(user);
+        return userMapper.toResponse(saved, addressResponse);
+    }
+
+    @Override
+    public UserCredentials getCredentialsByUsernameOrEmail(String usernameOrEmail) {
+        User user = userRepository.findByUsername(usernameOrEmail)
+                .or(() -> userRepository.findByEmail(usernameOrEmail))
+                .orElseThrow(() -> new UserNotFoundException("User not found: " + usernameOrEmail));
+        return userMapper.toCredentials(user);
     }
 }

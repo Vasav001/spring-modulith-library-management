@@ -27,4 +27,10 @@ public interface UserService {
     UserResponse update(Long id, UserRequest request);
 
     void delete(Long id);
+
+    UserResponse registerMember(UserRegistrationRequest request);
+
+    UserResponse createLibrarian(UserRegistrationRequest request);
+
+    UserCredentials getCredentialsByUsernameOrEmail(String usernameOrEmail);
 }

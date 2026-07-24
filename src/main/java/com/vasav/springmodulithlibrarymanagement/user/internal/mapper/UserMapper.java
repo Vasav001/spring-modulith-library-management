@@ -1,9 +1,7 @@
 package com.vasav.springmodulithlibrarymanagement.user.internal.mapper;
 
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressResponse;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserRequest;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserResponse;
-import com.vasav.springmodulithlibrarymanagement.user.api.UserSummary;
+import com.vasav.springmodulithlibrarymanagement.user.api.*;
 import com.vasav.springmodulithlibrarymanagement.user.internal.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -60,6 +58,38 @@ public class UserMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail()
+        );
+    }
+
+    public User toEntityForRegistration(UserRegistrationRequest request) {
+        User user = new User();
+        user.setUsername(request.username());
+        user.setEmail(request.email());
+        user.setPasswordHash(request.passwordHash());
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setPhone(request.phone());
+        user.setAddressId(request.addressId());
+        user.setPreferredBranchId(request.preferredBranchId());
+        user.setUserRole(UserRole.MEMBER);
+        user.setActive(true);
+        return user;
+    }
+
+    public User toEntityForLibrarian(UserRegistrationRequest request) {
+        User user = toEntityForRegistration(request);
+        user.setUserRole(UserRole.LIBRARIAN);
+        return user;
+    }
+
+    public UserCredentials toCredentials(User user) {
+        return new UserCredentials(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPasswordHash(),
+                user.getUserRole(),
+                user.getActive()
         );
     }
 }

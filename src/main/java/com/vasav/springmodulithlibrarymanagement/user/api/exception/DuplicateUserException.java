@@ -1,4 +1,4 @@
-package com.vasav.springmodulithlibrarymanagement.user.internal.exception;
+package com.vasav.springmodulithlibrarymanagement.user.api.exception;
 
 public class DuplicateUserException extends RuntimeException {
 
