@@ -1,6 +1,5 @@
 package com.vasav.springmodulithlibrarymanagement.user.api;
 
-import com.vasav.springmodulithlibrarymanagement.user.internal.entity.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

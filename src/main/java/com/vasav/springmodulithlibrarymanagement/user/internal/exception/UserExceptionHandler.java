@@ -36,6 +36,13 @@ class UserExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
     }
 
+    @ExceptionHandler(com.vasav.springmodulithlibrarymanagement.address.api.AddressNotFoundException.class)
+    ResponseEntity<ErrorResponse> handleAddressNotFound(
+            com.vasav.springmodulithlibrarymanagement.address.api.AddressNotFoundException ex,
+            HttpServletRequest request) {
+        return build(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
+    }
+
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String message, HttpServletRequest request) {
         ErrorResponse body = new ErrorResponse(
                 Instant.now(),

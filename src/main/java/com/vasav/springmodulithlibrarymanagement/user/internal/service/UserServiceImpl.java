@@ -7,7 +7,7 @@ import com.vasav.springmodulithlibrarymanagement.user.api.UserResponse;
 import com.vasav.springmodulithlibrarymanagement.user.api.UserService;
 import com.vasav.springmodulithlibrarymanagement.user.api.UserSummary;
 import com.vasav.springmodulithlibrarymanagement.user.internal.entity.User;
-import com.vasav.springmodulithlibrarymanagement.user.internal.entity.UserRole;
+import com.vasav.springmodulithlibrarymanagement.user.api.UserRole;
 import com.vasav.springmodulithlibrarymanagement.user.internal.exception.DuplicateUserException;
 import com.vasav.springmodulithlibrarymanagement.user.internal.exception.UserNotFoundException;
 import com.vasav.springmodulithlibrarymanagement.user.internal.mapper.UserMapper;

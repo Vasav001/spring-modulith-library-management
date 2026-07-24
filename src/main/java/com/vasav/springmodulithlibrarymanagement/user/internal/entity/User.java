@@ -1,5 +1,6 @@
 package com.vasav.springmodulithlibrarymanagement.user.internal.entity;
 
+import com.vasav.springmodulithlibrarymanagement.user.api.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

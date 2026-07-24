@@ -1,7 +1,6 @@
 package com.vasav.springmodulithlibrarymanagement.user.api;
 
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressResponse;
-import com.vasav.springmodulithlibrarymanagement.user.internal.entity.UserRole;
 
 import java.time.LocalDateTime;
 
