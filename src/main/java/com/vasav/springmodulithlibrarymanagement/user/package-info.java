@@ -1,5 +1,5 @@
 @ApplicationModule(
-        allowedDependencies = "address::api"
+        allowedDependencies = {"address::api", "common :: web"}
 )
 package com.vasav.springmodulithlibrarymanagement.user;
 

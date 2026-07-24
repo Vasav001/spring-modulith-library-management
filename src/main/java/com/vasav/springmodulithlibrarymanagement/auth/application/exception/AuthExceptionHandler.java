@@ -1,6 +1,7 @@
-package com.vasav.springmodulithlibrarymanagement.user.api.exception;
+package com.vasav.springmodulithlibrarymanagement.auth.application.exception;
 
 import com.vasav.springmodulithlibrarymanagement.common.web.ErrorResponse;
+import com.vasav.springmodulithlibrarymanagement.user.api.exception.DuplicateUserException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
-@RestControllerAdvice(basePackages = "com.vasav.springmodulithlibrarymanagement.user")
-class UserExceptionHandler {
+@RestControllerAdvice(basePackages = "com.vasav.springmodulithlibrarymanagement.auth")
+class AuthExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    ResponseEntity<ErrorResponse> handleNotFound(UserNotFoundException ex, HttpServletRequest request) {
-        return build(HttpStatus.NOT_FOUND, ex.getMessage(), request);
+    @ExceptionHandler(InvalidCredentialsException.class)
+    ResponseEntity<ErrorResponse> handleInvalidCredentials(InvalidCredentialsException ex, HttpServletRequest request) {
+        return build(HttpStatus.UNAUTHORIZED, ex.getMessage(), request);
     }
 
     @ExceptionHandler(DuplicateUserException.class)
@@ -32,25 +33,9 @@ class UserExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, message, request);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
-        return build(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
-    }
-
-    @ExceptionHandler(com.vasav.springmodulithlibrarymanagement.address.api.AddressNotFoundException.class)
-    ResponseEntity<ErrorResponse> handleAddressNotFound(
-            com.vasav.springmodulithlibrarymanagement.address.api.AddressNotFoundException ex,
-            HttpServletRequest request) {
-        return build(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
-    }
-
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String message, HttpServletRequest request) {
         ErrorResponse body = new ErrorResponse(
-                Instant.now(),
-                status.value(),
-                status.getReasonPhrase(),
-                message,
-                request.getRequestURI()
+                Instant.now(), status.value(), status.getReasonPhrase(), message, request.getRequestURI()
         );
         return ResponseEntity.status(status).body(body);
     }

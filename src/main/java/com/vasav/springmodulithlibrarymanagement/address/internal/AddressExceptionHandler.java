@@ -1,6 +1,7 @@
 package com.vasav.springmodulithlibrarymanagement.address.internal;
 
 import com.vasav.springmodulithlibrarymanagement.address.api.AddressNotFoundException;
+import com.vasav.springmodulithlibrarymanagement.common.web.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 class AddressExceptionHandler {
 
     @ExceptionHandler(AddressNotFoundException.class)
-    ResponseEntity<com.vasav.springmodulithlibrarymanagement.address.internal.ErrorResponse> handleNotFound(AddressNotFoundException ex, HttpServletRequest request) {
+    ResponseEntity<ErrorResponse> handleNotFound(AddressNotFoundException ex, HttpServletRequest request) {
         return build(HttpStatus.NOT_FOUND, ex.getMessage(), request);
     }
 

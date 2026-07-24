@@ -1,4 +1,4 @@
-package com.vasav.springmodulithlibrarymanagement.user.api.exception;
+package com.vasav.springmodulithlibrarymanagement.common.web;
 
 import java.time.Instant;
 

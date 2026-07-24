@@ -49,3 +49,8 @@ logging:
     level:
         org.hibernate.SQL: DEBUG
         org.hibernate.orm.jdbc.bind: TRACE
+
+app:
+    jwt:
+        secret: kjawdxkjabsclxjabdx
+        access-token-expiration-ms: 36000000
