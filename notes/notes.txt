@@ -1,0 +1,42 @@
+// TODO notes
+when returning books, update the book copy branch as branch where u returned the book
+
+DB ------------------------------------------
+
+add shelf location field to book copy later
+instead of book is active, make enum later
+fine reasons/description
+postgis
+
+more tables like notif, audit, transfer(if added later), history, report/stats related
+
+###
+ADD optimistic locking, soft deletws, audit history, row versions, tenent suppport, permissions beyond role(?)
+ADD docs, diagrms
+###
+
+APP -----------------------------------------
+skip lock while assigning book by librarian (research this)
+use event - email verify, audits, loan create - reports etc, reservation READY, book return - audit/reports,
+audit/report events
+
+cron - READy expire, automatic fine creation (?), timed notifs, staats/reports,
+
+flow ---------------------------
+
+user loans and returns same brsnch
+user loans and returns to other branch
+reserve from one branch. when available
+
+many reservation for one book (not copy) in single bramch
+reservation date decides order in queue
+statuses: pending = waiting for copy to be available; ready = ready to pickup by member; fulfilled = loaned; cancelled = cancel/expire
+ready until -> time until expiry; either pick before that or ur reservatioon expires (cancelled)
+
+user authenticates
+goes to profile
+updates address
+email verified OK
+address verified (by lib) Ok
+user active OK
+
