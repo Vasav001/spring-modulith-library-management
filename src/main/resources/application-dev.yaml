@@ -26,3 +26,16 @@ management:
                 include:
                     - health
                     - info
+
+app:
+    jwt:
+        secret: ${JWT_SECRET}
+        access-token-expiration: 900000 #15 min
+        refresh-token-expiration: 604800000 # 7d
+        email-verification-token-expiration: 86400000 #1d
+
+circulation:
+    reservation:
+        hold-duration: 2d
+    fine:
+        overdue-amount: 50
